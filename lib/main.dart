@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
-import 'audio_player.dart';
+//import 'audio_player.dart';
 import 'recorded_list_view.dart';
 
 void main() => runApp(const MyApp());
@@ -246,7 +246,9 @@ class _MyAppState extends State<MyApp> {
         if (onData.path.contains('.aac')) records.add(onData.path);
       }).onDone(() {
         records = records.reversed.toList();
-        setState(() {});
+        setState(() {
+          records.length;
+        });
       });
     });
   }
@@ -265,11 +267,12 @@ class _MyAppState extends State<MyApp> {
             flex: 1,
            child: AudioRecorder(
                   onStop: (path) {
-                    if (kDebugMode) print('Recorded file path: $path');
+                   // if (kDebugMode) print('Recorded file path: $path');
                     setState(() {
+                      records.length;
                       audioPath = path;
                       print('$audioPath');
-                     // showPlayer = true;
+                      showPlayer = true;                      
                     });
                   },
                 ),
@@ -333,106 +336,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         body: Center(
-//           child: showPlayer
-//               ? Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 25),
-//                   child: AudioPlayer(
-//                     source: audioPath!,
-//                     onDelete: () {
-//                       setState(() => showPlayer = false);
-//                     },
-//                   ),
-//                 )
-//               : AudioRecorder(
-//                   onStop: (path) {
-//                     if (kDebugMode) print('Recorded file path: $path');
-//                     setState(() {
-//                       audioPath = path;
-//                       print('$audioPath');
-//                       showPlayer = true;
-//                     });
-//                   },
-//                 ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
-
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatefulWidget {
-//   MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   String buttonName = 'click';
-//   int currentIndex = 0;
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: const Text('App Title'),
-//         ),
-//         body: Center(
-//           child: currentIndex == 0 ? Container(
-//             width: double.infinity,
-//             color: Colors.yellow,
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 ElevatedButton(
-//                   style: ElevatedButton.styleFrom(
-//                     onPrimary: Colors.white,
-//                     primary: Colors.green
-//                   ),
-//                   onPressed: () {
-//                     setState(() {
-//                       buttonName = 'clicked';
-//                     });
-//                   },
-//                   child: Text(buttonName),
-//                 ),
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     setState(() {
-//                       buttonName = 'clicked';
-//                     });
-//                   },
-//                   child: Text(buttonName),
-//                 ),
-//               ],
-//             ),
-//           ): Image.asset('images/northernlights.jpg'),
-//         ),
-//         bottomNavigationBar: BottomNavigationBar(
-//           items: const [
-//             BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-//             BottomNavigationBarItem(
-//                 label: 'Settings', icon: Icon(Icons.settings))
-//           ],
-//           currentIndex: currentIndex,
-//           onTap: (int Index) {
-//             setState(() {
-//               currentIndex = Index;
-//             });
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

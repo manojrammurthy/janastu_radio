@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/manoj/Janastu/flutter_learning/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "/home/manoj/Janastu/Janastu_radio/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/home/manoj/Janastu/flutter_learning/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/home/manoj/Janastu/Janastu_radio/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

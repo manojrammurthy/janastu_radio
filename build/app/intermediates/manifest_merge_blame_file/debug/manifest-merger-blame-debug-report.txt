@@ -13,17 +13,17 @@
 13         to allow setting breakpoints, to provide hot reload, etc.
 14    -->
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->/home/manoj/Janastu/flutter_learning/android/app/src/debug/AndroidManifest.xml:7:5-66
-15-->/home/manoj/Janastu/flutter_learning/android/app/src/debug/AndroidManifest.xml:7:22-64
+15-->/home/manoj/Janastu/Janastu_radio/android/app/src/debug/AndroidManifest.xml:7:5-66
+15-->/home/manoj/Janastu/Janastu_radio/android/app/src/debug/AndroidManifest.xml:7:22-64
 16    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- Optional, you'll have to check this permission by yourself. -->
-16-->/home/manoj/Janastu/flutter_learning/android/app/src/main/AndroidManifest.xml:3:6-72
-16-->/home/manoj/Janastu/flutter_learning/android/app/src/main/AndroidManifest.xml:3:23-69
+16-->/home/manoj/Janastu/Janastu_radio/android/app/src/main/AndroidManifest.xml:3:6-72
+16-->/home/manoj/Janastu/Janastu_radio/android/app/src/main/AndroidManifest.xml:3:23-69
 17    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-17-->/home/manoj/Janastu/flutter_learning/android/app/src/main/AndroidManifest.xml:5:5-81
-17-->/home/manoj/Janastu/flutter_learning/android/app/src/main/AndroidManifest.xml:5:22-78
+17-->/home/manoj/Janastu/Janastu_radio/android/app/src/main/AndroidManifest.xml:5:5-81
+17-->/home/manoj/Janastu/Janastu_radio/android/app/src/main/AndroidManifest.xml:5:22-78
 18    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-18-->/home/manoj/Janastu/flutter_learning/android/app/src/main/AndroidManifest.xml:6:5-79
-18-->/home/manoj/Janastu/flutter_learning/android/app/src/main/AndroidManifest.xml:6:22-77
+18-->/home/manoj/Janastu/Janastu_radio/android/app/src/main/AndroidManifest.xml:6:5-79
+18-->/home/manoj/Janastu/Janastu_radio/android/app/src/main/AndroidManifest.xml:6:22-77
 19
 20    <application
 21        android:name="android.app.Application"

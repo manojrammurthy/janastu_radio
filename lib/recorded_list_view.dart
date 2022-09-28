@@ -1,6 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/cupertino.dart';
+
 
 class RecordListView extends StatefulWidget {
   final List<String> records;
@@ -20,6 +24,8 @@ class _RecordListViewState extends State<RecordListView> {
   bool _isPlaying = false;
   int _selectedIndex = -1;
   bool isLocal = false;
+  bool _isShown = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +61,9 @@ class _RecordListViewState extends State<RecordListView> {
                               AlwaysStoppedAnimation<Color>(Colors.green),
                           value: _selectedIndex == i ? _completedPercentage : 0,
                         ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: [
                         IconButton(
                           icon: _selectedIndex == i
                               ? _isPlaying
@@ -63,7 +72,16 @@ class _RecordListViewState extends State<RecordListView> {
                               : Icon(Icons.play_arrow),
                           onPressed: () => _onPlay(
                               filePath: widget.records.elementAt(i), index: i),
-                        ),
+                        ),   
+                           IconButton(
+                            icon:
+                            Icon(Icons.delete_outline),
+                            onPressed: () => _delete(context,widget.records.elementAt(i), i),
+                          // onPressed: () => _onDelete(
+                              // filePath: widget.records.elementAt(i), index: i),
+                        ),  
+          ],
+                        ),  
                       ],
                     ),
                   ),
@@ -72,39 +90,106 @@ class _RecordListViewState extends State<RecordListView> {
             },
           );
   }
+void _delete(BuildContext context, String filePath, int index) {
+    showDialog(
+      
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('Please Confirm'),
+            content: const Text('Are you sure to delete the audio?'),
+            actions: [
+            
+              // The "Yes" button
+              TextButton(
+                  onPressed: () async {
+                    try {
+          final file = await File(filePath);
+          await file.delete();
+          setState(() {
+            widget.records.removeAt(index);
+            _isPlaying = false;
+           widget.records.length;
+          });;
+        } catch (e) {
+          return print('Recorded file path: $filePath, $index');
+        }
+                    // Remove the box
+                    // setState(() {
+                    //   _isShown = false;
+                    // });
+
+                    // Close the dialog
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Yes')),
+              TextButton(
+                  onPressed: () {
+                    // Close the dialog
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('No'))
+            ],
+          );
+        });
+  }
+
+
+   Future<void> _onDelete({required String filePath, required int index}) async {
+        try {
+          final file = await File(filePath);
+          await file.delete();
+          setState(() {
+            widget.records.removeAt(index);
+            _isPlaying = false;
+           widget.records.length;
+          });;
+        } catch (e) {
+          return print('Recorded file path: $filePath, $index');
+        }
+      }
   
   Future<void> _onPlay({required String filePath, required int index}) async {
     AudioPlayer audioPlayer = AudioPlayer();
+    //if (kDebugMode) print('Recorded file path: $filePath, $index');
   
-    // if (!_isPlaying) {
-    //   audioPlayer.play(filePath, isLocal: true);
-    //   setState(() {
-    //     _selectedIndex = index;
-    //     _completedPercentage = 0.0;
-    //     _isPlaying = true;
-    //   });
-    // }
-
-  //     audioPlayer.onPlayerCompletion.listen((_) {
-  //       setState(() {
-  //         _isPlaying = false;
-  //         _completedPercentage = 0.0;
-  //       });
-  //     });
-  //     audioPlayer.onDurationChanged.listen((duration) {
-  //       setState(() {
-  //         _totalDuration = duration.inMicroseconds;
-  //       });
-  //     });
-
-  //     audioPlayer.onAudioPositionChanged.listen((duration) {
-  //       setState(() {
-  //         _currentDuration = duration.inMicroseconds;
-  //         _completedPercentage =
-  //             _currentDuration.toDouble() / _totalDuration.toDouble();
-  //       });
-  //     });
+    if (!_isPlaying) {
+         
+      audioPlayer.play(DeviceFileSource(filePath));
+      setState(() {
+        _selectedIndex = index;
+        _completedPercentage = 0.0;
+        _isPlaying = true;
+      });
     }
+    else
+    {
+       audioPlayer.pause();
+      setState(() {
+        _isPlaying = false;
+      });
+    }
+
+      audioPlayer.onPlayerComplete.listen((_) {
+        setState(() {
+          _isPlaying = false;
+          _completedPercentage = 0.0;
+        });
+      });
+      audioPlayer.onDurationChanged.listen((duration) {
+        setState(() {
+          _totalDuration = duration.inMicroseconds;
+        });
+      });
+// 
+      audioPlayer.onPositionChanged.listen((duration) {
+        setState(() {
+          _currentDuration = duration.inMicroseconds;
+          _completedPercentage =
+              _currentDuration.toDouble() / _totalDuration.toDouble();
+        });
+      });
+     }
   }
 
   String _getDateFromFilePatah({required String filePath}) {
