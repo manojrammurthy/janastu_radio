@@ -38,6 +38,7 @@ dependencies:
   #assets_audio_player: ^3.0.5
   record: ^4.3.2
   path_provider: ^2.0.11
+  url_launcher: ^6.1.6
 
 
 

@@ -8,6 +8,7 @@
 
 import 'package:audioplayers_web/audioplayers_web.dart';
 import 'package:record_web/record_web.dart';
+import 'package:url_launcher_web/url_launcher_web.dart';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
@@ -15,5 +16,6 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 void registerPlugins(Registrar registrar) {
   AudioplayersPlugin.registerWith(registrar);
   RecordPluginWeb.registerWith(registrar);
+  UrlLauncherPlugin.registerWith(registrar);
   registrar.registerMessageHandler();
 }
