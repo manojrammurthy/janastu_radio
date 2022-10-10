@@ -1,0 +1,18 @@
+<lint-module
+    format="1"
+    dir="/home/manoj/Janastu/Janastu_radio/android/app"
+    name=":app"
+    type="APP"
+    maven="android:app:"
+    gradle="7.1.2"
+    buildFolder="/home/manoj/Janastu/Janastu_radio/build/app"
+    bootClassPath="/home/manoj/Android/Sdk/platforms/android-31/android.jar:/home/manoj/Android/Sdk/build-tools/30.0.3/core-lambda-stubs.jar"
+    javaSourceLevel="1.8"
+    compileTarget="android-31">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/layout/notification_action_tombstone.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/layout/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/layout/custom_dialog.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/layout/notification_template_part_chronometer.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/layout/notification_action.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/layout/notification_action.xml"
+    },
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/layout/notification_template_part_time.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/layout/notification_template_icon_group.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/layout/notification_template_icon_group.xml"
+    }
+]

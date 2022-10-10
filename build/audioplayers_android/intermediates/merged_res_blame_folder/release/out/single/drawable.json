@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/drawable/notification_tile_bg.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/drawable/notification_icon_background.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/drawable/notification_bg_low.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/home/manoj/Janastu/Janastu_radio/build/audioplayers_android/intermediates/merged_res/release/drawable/notification_bg.xml",
+        "source": "/home/manoj/.gradle/caches/transforms-3/5e083c06c9925c2309f02468fc66e376/transformed/core-1.7.0/res/drawable/notification_bg.xml"
+    }
+]
