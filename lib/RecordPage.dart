@@ -44,11 +44,8 @@ class _RecordpageState extends State<Recordpage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Record audio',
-      debugShowCheckedModeBanner: false,
+       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        // appBar: AppBar(
-        //   title:  Text(widgetTitle.elementAt(currentIndex)),
-        // ),
         body: Column(
         children: [
           Expanded(
@@ -73,7 +70,7 @@ class _RecordpageState extends State<Recordpage> {
       ),
       ),
     );
-          }
+    }
   }
 
 
@@ -165,6 +162,7 @@ class _AudioRecorderState extends State<AudioRecorder> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
