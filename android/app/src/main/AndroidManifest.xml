@@ -12,9 +12,11 @@
     </intent>
 </queries>
    <application
-        android:label="flutter_learning"
+        android:label="Janastu_radio"
         android:name="${applicationName}"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -39,7 +39,7 @@ dependencies:
   record: ^4.3.2
   path_provider: ^2.0.11
   url_launcher: ^6.1.6
-
+  dio: ^4.0.6
 
 
 dev_dependencies:

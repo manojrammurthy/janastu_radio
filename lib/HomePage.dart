@@ -104,12 +104,12 @@ class _HomepageState extends State<Homepage> {
               height: 130,
             ),
             Text('New User? Create Account'),
-            SizedBox(
-             child: Center(
-             child: RaisedButton(
+            Column(
+             children: [
+             ElevatedButton.icon(
             onPressed: () async {
                 final url = Uri.parse(
-                  'https://dev-yakuza.posstree.com/en/',
+                  'https://janastu.org',
                 );
                 if (await canLaunchUrl(url)) {
                   launchUrl(url);
@@ -117,9 +117,22 @@ class _HomepageState extends State<Homepage> {
                   // ignore: avoid_print
                   print("Can't launch $url");
                 }
-            }
+            }, label: Text('Janastu'), icon: Icon(Icons.insert_link),
         ),
-      ),
+        ElevatedButton.icon(
+            onPressed: () async {
+                final url = Uri.parse(
+                  'http://servelots.com/',
+                );
+                if (await canLaunchUrl(url)) {
+                  launchUrl(url);
+                } else {
+                  // ignore: avoid_print
+                  print("Can't launch $url");
+                }
+            }, label: Text('Servelots'), icon: Icon(Icons.insert_link),
+        ),
+             ]
             )
           ],
         ),
