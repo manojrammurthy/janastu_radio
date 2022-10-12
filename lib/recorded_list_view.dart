@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -52,7 +53,7 @@ class _RecordListViewState extends State<RecordListView> {
                 }),
                 children: [
                   Container(
-                    height: 100,
+                    height: 140,
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -119,32 +120,34 @@ class _RecordListViewState extends State<RecordListView> {
 //   });
 // }
 Future<void> _fileupload(BuildContext context, String filePath, int index) async {
-     showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return Dialog(
-        child: new Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            new CircularProgressIndicator(),
-          ],
-        ),
-      );
-    },
-  );
+  //    showDialog(
+  //   context: context,
+  //   barrierDismissible: false,
+  //   builder: (BuildContext context) {
+  //     return Dialog(
+  //       child: new Row(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           new CircularProgressIndicator(),
+            
+  //         ],
+  //       ),
+  //     );
+  //   },
+  // );
   
-    //Navigator.pop(context); //pop dialog
+  //   //Navigator.pop(context); //pop dialog
     try {
       ///[1] CREATING INSTANCE
       var dioRequest = dio.Dio();
       dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
 
       //[2] ADDING TOKEN
-      dioRequest.options.headers = {
-        'Authorization': '897f04bf657caad25954f6867fda09680f90421f',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      };
+      dioRequest.options.headers["Authorization"] = "Token 897f04bf657caad25954f6867fda09680f90421f";
+      // dioRequest.options.headers = {
+      //   'Authorization': '897f04bf657caad25954f6867fda09680f90421f',
+      //   // 'Content-Type': 'application/x-www-form-urlencoded'
+      // };
 
       //[3] ADDING EXTRA INFO
       var formData =
@@ -162,15 +165,21 @@ Future<void> _fileupload(BuildContext context, String filePath, int index) async
       formData.files.add(MapEntry('upload', file));  
 
       //[5] SEND TO SERVER
+      try{
       var response = await dioRequest.post("/archive/",
         data: formData,
       );
-      final result = json.decode(response.toString())['result'];
-      print(result);
+      }
+      on DioError catch(e){
+        throw Exception(e.response?.data); 
+
+   }
+      // final result = json.decode(response.toString())['result'];
+      // print(result);
     } catch (err) {
       print('ERROR  $err');
     }
-   // _login(); 
+  //  // _login(); 
 
 }
   void _delete(BuildContext context, String filePath, int index) {
