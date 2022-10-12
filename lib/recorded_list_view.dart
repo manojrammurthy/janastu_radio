@@ -4,6 +4,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart' as dio;
+import 'dart:convert';
+import 'package:http_parser/http_parser.dart';
+import 'package:path/path.dart';
+
 
 class RecordListView extends StatefulWidget {
   final List<String> records;
@@ -73,9 +78,14 @@ class _RecordListViewState extends State<RecordListView> {
                                   index: i),
                             ),
                             IconButton(
+                              icon: Icon(Icons.upload_file_outlined),
+                              onPressed: () => _fileupload(
+                                  context, widget.records.elementAt(i), i),
+                            ),
+                            IconButton(
                               icon: Icon(Icons.delete_outline),
                               onPressed: () => _delete(
-                                  context, widget.records.elementAt(i), i),
+                                context, widget.records.elementAt(i), i),
                             ),
                           ],
                         ),
@@ -87,7 +97,82 @@ class _RecordListViewState extends State<RecordListView> {
             },
           );
   }
+//   void _onLoading(BuildContext context) {
+//   showDialog(
+//     context: context,
+//     barrierDismissible: false,
+//     builder: (BuildContext context) {
+//       return Dialog(
+//         child: new Row(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             new CircularProgressIndicator(),
+//             new Text("Loading"),
+//           ],
+//         ),
+//       );
+//     },
+//   );
+//   new Future.delayed(new Duration(seconds: 3), () {
+//     Navigator.pop(context); //pop dialog
+//    // _login();
+//   });
+// }
+Future<void> _fileupload(BuildContext context, String filePath, int index) async {
+     showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return Dialog(
+        child: new Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            new CircularProgressIndicator(),
+          ],
+        ),
+      );
+    },
+  );
+  
+    //Navigator.pop(context); //pop dialog
+    try {
+      ///[1] CREATING INSTANCE
+      var dioRequest = dio.Dio();
+      dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
 
+      //[2] ADDING TOKEN
+      dioRequest.options.headers = {
+        'Authorization': '897f04bf657caad25954f6867fda09680f90421f',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      };
+
+      //[3] ADDING EXTRA INFO
+      var formData =
+          new dio.FormData.fromMap({'name': 'manojtest',
+          'description':'This is a Audio Archive Demo1',
+          'tags':'janastu,audio,demo,archive',
+          'group':'10'});
+
+      // //[4] ADD IMAGE TO UPLOAD
+      var file = await dio.MultipartFile.fromFile(filePath,
+            filename: basename(filePath),
+           // contentType: MediaType("image", basename(image.path))
+            );
+
+      formData.files.add(MapEntry('upload', file));  
+
+      //[5] SEND TO SERVER
+      var response = await dioRequest.post("/archive/",
+        data: formData,
+      );
+      final result = json.decode(response.toString())['result'];
+      print(result);
+    } catch (err) {
+      print('ERROR  $err');
+    }
+   // _login(); 
+
+}
   void _delete(BuildContext context, String filePath, int index) {
     showDialog(
         context: context,
@@ -113,13 +198,13 @@ class _RecordListViewState extends State<RecordListView> {
                     }
 
                     // Close the dialog
-                    Navigator.of(context).pop();
+                    Navigator.of(context,rootNavigator: true).pop();
                   },
                   child: const Text('Yes')),
               TextButton(
                   onPressed: () {
                     // Close the dialog
-                    Navigator.of(context).pop();
+                    Navigator.of(context,rootNavigator: true).pop();
                   },
                   child: const Text('No'))
             ],
