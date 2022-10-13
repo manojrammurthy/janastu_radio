@@ -1,8 +1,65 @@
-import 'package:flutter/material.dart';
- import 'package:audioplayers/audioplayers.dart' ;
-//import 'package:path/path.dart';
- //import 'audio_player.dart' hide AudioPlayer;
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart' ;
+import 'package:dio/dio.dart' as dio;
+import 'package:json_annotation/json_annotation.dart';
+import 'package:dio/dio.dart';
+
+
+part 'PapadPage.g.dart';
+
+
+@JsonSerializable()
+class Playlistdata {
+  Playlistdata({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.audiolink,
+  });
+
+  int id;
+  String name;
+  @JsonKey(name: 'upload')
+  String audiolink;
+  String description;
+
+
+  factory Playlistdata.fromJson(Map<String, dynamic> json) => _$PlaylistdataFromJson(json);
+  Map<String, dynamic> toJson() => _$PlaylistdataToJson(this);
+}
+
+Future<void> loadlist() async {
+  try {
+   var dioRequest = dio.Dio();
+    dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
+
+    //[2] ADDING TOKEN
+    dioRequest.options.headers['content-Type'] = 'application/json';
+    dioRequest.options.headers["Authorization"] = "Token 897f04bf657caad25954f6867fda09680f90421f";
+    var response = await dioRequest.get(
+        "/?group=10/");
+        //final result = json.decode(response.toString())['results'];
+       print(response);
+       //return result;
+  }
+  on DioError catch (e) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx and is also not 304.
+    if (e.response != null) {
+      print('Dio error!');
+      print('STATUS: ${e.response?.statusCode}');
+      print('DATA: ${e.response?.data}');
+      print('HEADERS: ${e.response?.headers}');
+    } else {
+      // Error due to setting up or sending the request
+      print('Error sending request!');
+      print(e.message);
+    }
+    // Prints the raw data returned by the server
+  }
+}
 
 class PapadPage extends StatefulWidget {
   @override
@@ -22,6 +79,7 @@ class _AudioPlayerUrlState extends State<PapadPage> {
   ///             - time stamps for progress and duration
   ///             - slider to jump within the audio file
   ///
+  
 
   /// Compulsory
   AudioPlayer audioPlayer = AudioPlayer();
@@ -48,7 +106,7 @@ class _AudioPlayerUrlState extends State<PapadPage> {
   @override
   void initState() {
     super.initState();
-
+    //loadlist();
     /// Compulsory
     audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
       setState(() {
@@ -124,6 +182,10 @@ class _AudioPlayerUrlState extends State<PapadPage> {
                   icon: Icon(audioPlayerState == PlayerState.playing
                       ? Icons.pause_rounded
                       : Icons.play_arrow_rounded)),
+                       IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () => loadlist(),
+                            ),
 
               /// Optional
               Row(
@@ -141,3 +203,4 @@ class _AudioPlayerUrlState extends State<PapadPage> {
     );
   }
 }
+

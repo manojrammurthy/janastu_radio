@@ -133,10 +133,6 @@ class _RecordListViewState extends State<RecordListView> {
     //[2] ADDING TOKEN
     dioRequest.options.headers["Authorization"] =
         "Token 897f04bf657caad25954f6867fda09680f90421f";
-    // dioRequest.options.headers = {
-    //   'Authorization': '897f04bf657caad25954f6867fda09680f90421f',
-    //   // 'Content-Type': 'application/x-www-form-urlencoded'
-    // };
 
     //[3] ADDING EXTRA INFO
     var formData = new dio.FormData.fromMap({
