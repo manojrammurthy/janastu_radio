@@ -2,14 +2,13 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart' as dio;
-import 'dart:convert';
-import 'package:http_parser/http_parser.dart';
+// import 'dart:convert';
+// import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
-
 
 class RecordListView extends StatefulWidget {
   final List<String> records;
@@ -20,6 +19,30 @@ class RecordListView extends StatefulWidget {
 
   @override
   _RecordListViewState createState() => _RecordListViewState();
+}
+
+// void showProgress(received, total) {
+//   if (total != -1) {
+//     print((received / total * 100).toStringAsFixed(0) + '%');
+//   }
+// }
+showAlertDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    content: new Row(
+      children: [
+        CircularProgressIndicator(),
+        Container(margin: EdgeInsets.only(left: 5), child: Text("Uploading")),
+      ],
+    ),
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    useRootNavigator: false,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
 
 class _RecordListViewState extends State<RecordListView> {
@@ -79,14 +102,16 @@ class _RecordListViewState extends State<RecordListView> {
                                   index: i),
                             ),
                             IconButton(
-                              icon: Icon(Icons.upload_file_outlined),
+                              icon: Icon(Icons.upload_file_rounded),
+                              tooltip: 'Upload file to server',
                               onPressed: () => _fileupload(
                                   context, widget.records.elementAt(i), i),
                             ),
+                            Text('Upload'),
                             IconButton(
                               icon: Icon(Icons.delete_outline),
                               onPressed: () => _delete(
-                                context, widget.records.elementAt(i), i),
+                                  context, widget.records.elementAt(i), i),
                             ),
                           ],
                         ),
@@ -98,90 +123,73 @@ class _RecordListViewState extends State<RecordListView> {
             },
           );
   }
-//   void _onLoading(BuildContext context) {
-//   showDialog(
-//     context: context,
-//     barrierDismissible: false,
-//     builder: (BuildContext context) {
-//       return Dialog(
-//         child: new Row(
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             new CircularProgressIndicator(),
-//             new Text("Loading"),
-//           ],
-//         ),
-//       );
-//     },
-//   );
-//   new Future.delayed(new Duration(seconds: 3), () {
-//     Navigator.pop(context); //pop dialog
-//    // _login();
-//   });
-// }
-Future<void> _fileupload(BuildContext context, String filePath, int index) async {
-  //    showDialog(
-  //   context: context,
-  //   barrierDismissible: false,
-  //   builder: (BuildContext context) {
-  //     return Dialog(
-  //       child: new Row(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: [
-  //           new CircularProgressIndicator(),
-            
-  //         ],
-  //       ),
-  //     );
-  //   },
-  // );
-  
-  //   //Navigator.pop(context); //pop dialog
+
+  Future<void> _fileupload(
+      BuildContext context, String filePath, int index) async {
+    ///[1] CREATING INSTANCE
+    var dioRequest = dio.Dio();
+    dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
+
+    //[2] ADDING TOKEN
+    dioRequest.options.headers["Authorization"] =
+        "Token 897f04bf657caad25954f6867fda09680f90421f";
+    // dioRequest.options.headers = {
+    //   'Authorization': '897f04bf657caad25954f6867fda09680f90421f',
+    //   // 'Content-Type': 'application/x-www-form-urlencoded'
+    // };
+
+    //[3] ADDING EXTRA INFO
+    var formData = new dio.FormData.fromMap({
+      'name': 'manojtest',
+      'description': 'This is a Audio Archive Demo1',
+      'tags': 'janastu,audio,demo,archive',
+      'group': '10'
+    });
+
+    // //[4] ADD IMAGE TO UPLOAD
+    var file = await dio.MultipartFile.fromFile(
+      filePath,
+      filename: basename(filePath),
+    );
+    formData.files.add(MapEntry('upload', file));
+
+    //[5] SEND TO SERVER
     try {
-      ///[1] CREATING INSTANCE
-      var dioRequest = dio.Dio();
-      dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
-
-      //[2] ADDING TOKEN
-      dioRequest.options.headers["Authorization"] = "Token 897f04bf657caad25954f6867fda09680f90421f";
-      // dioRequest.options.headers = {
-      //   'Authorization': '897f04bf657caad25954f6867fda09680f90421f',
-      //   // 'Content-Type': 'application/x-www-form-urlencoded'
-      // };
-
-      //[3] ADDING EXTRA INFO
-      var formData =
-          new dio.FormData.fromMap({'name': 'manojtest',
-          'description':'This is a Audio Archive Demo1',
-          'tags':'janastu,audio,demo,archive',
-          'group':'10'});
-
-      // //[4] ADD IMAGE TO UPLOAD
-      var file = await dio.MultipartFile.fromFile(filePath,
-            filename: basename(filePath),
-           // contentType: MediaType("image", basename(image.path))
-            );
-
-      formData.files.add(MapEntry('upload', file));  
-
-      //[5] SEND TO SERVER
-      try{
-      var response = await dioRequest.post("/archive/",
+      showAlertDialog(context);
+      var response = await dioRequest.post(
+        "/archive/",
         data: formData,
+        onSendProgress: (received, total) {
+          if (total != -1) {
+            //var percent = (received / total * 100).toStringAsFixed(0) + '%';
+            var percentvalue = (received/total*100);
+            if(percentvalue == 100)
+            try {
+                      final file =  File(filePath);
+                       file.delete();
+                      setState(() {
+                        widget.records.removeAt(index);
+                        widget.records.length;
+                      });
+                      ;
+                    } catch (e) {
+                      return print('Recorded file path: $filePath, $index');
+                    }
+          }
+        },
       );
-      }
-      on DioError catch(e){
-        throw Exception(e.response?.data); 
-
-   }
-      // final result = json.decode(response.toString())['result'];
+      print(response);
+      Navigator.pop(context);
+      //  final result = json.decode(response.toString())['results'];
       // print(result);
-    } catch (err) {
-      print('ERROR  $err');
+    } on DioError catch (e) {
+      Navigator.of(context).pop();
+      throw Exception(e.response?.data);
     }
-  //  // _login(); 
+    // final result = json.decode(response.toString())['result'];
+    // print(result);
+  }
 
-}
   void _delete(BuildContext context, String filePath, int index) {
     showDialog(
         context: context,
@@ -207,13 +215,13 @@ Future<void> _fileupload(BuildContext context, String filePath, int index) async
                     }
 
                     // Close the dialog
-                    Navigator.of(context,rootNavigator: true).pop();
+                    Navigator.of(context, rootNavigator: true).pop();
                   },
                   child: const Text('Yes')),
               TextButton(
                   onPressed: () {
                     // Close the dialog
-                    Navigator.of(context,rootNavigator: true).pop();
+                    Navigator.of(context, rootNavigator: true).pop();
                   },
                   child: const Text('No'))
             ],
@@ -250,7 +258,7 @@ Future<void> _fileupload(BuildContext context, String filePath, int index) async
         _totalDuration = duration.inMicroseconds;
       });
     });
-//
+
     audioPlayer.onPositionChanged.listen((duration) {
       setState(() {
         _currentDuration = duration.inMicroseconds;

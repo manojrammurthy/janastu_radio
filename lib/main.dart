@@ -1,11 +1,7 @@
-import 'dart:async';
-import 'dart:io';
-//import 'package:flutter/foundation.dart';
+//import 'dart:async';
+//import 'dart:io';
 import 'package:flutter/material.dart';
-//import 'package:record/record.dart';
-import 'package:path_provider/path_provider.dart';
-//import 'audio_player.dart';
-//import 'recorded_list_view.dart';
+//import 'package:path_provider/path_provider.dart';
 import 'HomePage.dart';
 import 'RecordPage.dart';
 import 'PapadPage.dart';
@@ -23,32 +19,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
    int currentIndex = 0;
    final widgetTitle = ["Home", "Record Audio", "playfrompapad"];
-  //  late Directory appDirectory;
-  // bool showPlayer = false;
-  // String? audioPath;
-  // List<String> records = [];
-
-  // @override
-  // void initState() {
-  //   showPlayer = false;
-  //   super.initState();
-  //    getApplicationDocumentsDirectory().then((value) {
-  //     appDirectory = value;
-  //     appDirectory.list().listen((onData) {
-  //       if (onData.path.contains('.aac')) records.add(onData.path);
-  //     }).onDone(() {
-  //       records = records.reversed.toList();
-  //       setState(() {
-  //         records.length;
-  //       });
-  //     });
-  //   });
-  // }
-
+ 
   final List<Widget> _pages = <Widget>[
     Homepage(),
      Recordpage(),
-     Papadpage(),
+     PapadPage(),
 ];
 
   @override
@@ -87,25 +62,6 @@ class _MyAppState extends State<MyApp> {
             setState(
               () {
                 currentIndex = Index;
-                // switch (Index) {
-                //   case 0:
-                //     //Navigator.pushNamed(context, '/home');
-                //     //print(context);
-                //     break;
-                //   case 1:
-                //     //Navigator.pushNamed(context, '/recordAudio');
-                //     print(Index);
-                //     break;
-                //   case 2:
-                //     //Navigator.pushNamed(context,'/playfrompapad');
-                //     print(Index);
-                //     break;
-                //   default:
-                //     //Navigator.pushNamed(context, '/home');
-                //     print(Index);
-                //     break;
-                // }
-                
               },
             );
           },
