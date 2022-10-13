@@ -3,16 +3,7 @@ import 'package:flutter/material.dart';
 //import 'package:path/path.dart';
  //import 'audio_player.dart' hide AudioPlayer;
 
-//  class Papadpage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context)
-//   {
-//     return Center(
-//       child: Text('papad'),
-       
-//     );
-//   }
-//  }
+
 class PapadPage extends StatefulWidget {
   @override
   _AudioPlayerUrlState createState() => _AudioPlayerUrlState();
