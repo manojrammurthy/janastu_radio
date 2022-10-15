@@ -3,6 +3,8 @@ import 'package:audioplayers/audioplayers.dart' ;
 import 'papadlistview.dart';
 
 class PapadPage extends StatefulWidget {
+ //final String audiolink;
+// PapadPage({Key? key,this.audiolink }) : super(key: key);
   @override
   _AudioPlayerUrlState createState() => _AudioPlayerUrlState();
 }
@@ -10,14 +12,18 @@ class PapadPage extends StatefulWidget {
 class _AudioPlayerUrlState extends State<PapadPage> {
   
 
+
   /// Compulsory
   AudioPlayer audioPlayer = AudioPlayer();
   PlayerState audioPlayerState = PlayerState.paused;
-  String url = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3';
+   String url = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3';
+   //String url ='';
 
   /// Optional
   int timeProgress = 0;
   int audioDuration = 0;
+
+  
 
   /// Optional
   Widget slider() {
@@ -34,8 +40,10 @@ class _AudioPlayerUrlState extends State<PapadPage> {
 
   @override
   void initState() {
+
     super.initState();
     /// Compulsory
+      
     audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
       setState(() {
         audioPlayerState = state;
@@ -43,8 +51,9 @@ class _AudioPlayerUrlState extends State<PapadPage> {
     });
 
     /// Optional
-    audioPlayer.setSourceUrl(
-        url); // Triggers the onDurationChanged listener and sets the max duration string
+     //audioPlayer.setSourceUrl(widget.audiolink); 
+     audioPlayer.setSourceUrl(url); 
+    // Triggers the onDurationChanged listener and sets the max duration string
     audioPlayer.onDurationChanged.listen((Duration duration) {
       setState(() {
         audioDuration = duration.inSeconds;

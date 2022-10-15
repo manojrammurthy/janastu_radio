@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
+import 'package:flutter_learning/PapadPage.dart';
 
 //@JsonSerializable()
 
@@ -93,5 +94,6 @@ class AudioListView extends StatelessWidget {
           icon,
           color: Colors.blue[500],
         ),
-      );
+       // onTap: ()=>PapadPage(audiolink),
+        );
 }

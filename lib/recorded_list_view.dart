@@ -200,7 +200,6 @@ class _RecordListViewState extends State<RecordListView> {
                     } catch (e) {
                       return print('Recorded file path: $filePath, $index');
                     }
-
                     // Close the dialog
                     Navigator.of(context, rootNavigator: true).pop();
                   },
