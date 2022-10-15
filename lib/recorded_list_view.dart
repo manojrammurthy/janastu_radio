@@ -171,14 +171,10 @@ class _RecordListViewState extends State<RecordListView> {
       );
       print(response);
       Navigator.pop(context);
-      //  final result = json.decode(response.toString())['results'];
-      // print(result);
     } on DioError catch (e) {
       Navigator.of(context).pop();
       throw Exception(e.response?.data);
     }
-    // final result = json.decode(response.toString())['result'];
-    // print(result);
   }
 
   void _delete(BuildContext context, String filePath, int index) {
@@ -222,8 +218,6 @@ class _RecordListViewState extends State<RecordListView> {
 
   Future<void> _onPlay({required String filePath, required int index}) async {
     AudioPlayer audioPlayer = AudioPlayer();
-    //if (kDebugMode) print('Recorded file path: $filePath, $index');
-
     if (!_isPlaying) {
       audioPlayer.play(DeviceFileSource(filePath));
       setState(() {

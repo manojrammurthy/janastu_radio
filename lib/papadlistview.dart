@@ -1,10 +1,8 @@
-//import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter/material.dart';
-//import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart' as dio;
+import 'package:dio/dio.dart';
 
 //@JsonSerializable()
 
@@ -16,14 +14,12 @@ class Audio {
   final String description;
   final  String audiolink;
 
- 
-
   factory Audio.fromJson(Map<String, dynamic> json) {
     return Audio(
       id: json['id'],
       name: json['name'],
-      audiolink: json['upload'],
-      description: json['description'],
+      audiolink: json['upload'] ?? '',
+      description: json['description'] ,
     );
   }
 }
@@ -53,30 +49,41 @@ class AudioListView extends StatelessWidget {
     //[2] ADDING TOKEN
     dioRequest.options.headers['content-Type'] = 'application/json';
     dioRequest.options.headers["Authorization"] = "Token 897f04bf657caad25954f6867fda09680f90421f";
+    try{
     var response = await dioRequest.get("/archive/?group=10");
         final result = json.decode(response.toString());
     if (response.statusCode == 200) {
       String jsonResponse = jsonEncode(result['results']);
       List  jsonout = json.decode(jsonResponse);
       //print(result['results']);
-      print(jsonout);
-      print('success');
+      // print(jsonout);
+      // print('success');
       return jsonout.map((audio) => new Audio.fromJson(audio)).toList();
-    } else {
-      throw Exception('Failed to load jobs from API');
     }
+    } on DioError  catch (ex) {
+      if(ex.type == DioErrorType.connectTimeout){
+        throw Exception("Connection Timeout Exception");
+      }
+      throw Exception(ex.message);
+    }
+    // else {
+      throw Exception('Failed to load jobs from API');
+    // }
   }
 
   ListView _AudioListView(data) {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
-          return _tile(data[index].name, data[index].audiolink, Icons.work);
+          //if(data[index].audiolink.isEmpty) ;
+          //https://github.com/flutter/flutter/issues/108705
+         // issuses with livview item builder null values 
+          return _tile(data[index].name, data[index].description, data[index].audiolink,Icons.music_note_rounded);
         });
   }
 
-  ListTile _tile(String title, String subtitle, IconData icon) => ListTile(
-        title: Text(title,
+  ListTile _tile(String title, String subtitle, String audiolink, IconData icon) => ListTile(
+            title: Text(title,
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 20,
