@@ -4334,6 +4334,25 @@ io.flutter.plugins.pathprovider.R$style
 io.flutter.plugins.pathprovider.R$styleable
 io.flutter.plugins.pathprovider.R
 io.flutter.plugins.pathprovider.StorageDirectoryMapper
+io.flutter.plugins.urllauncher.BuildConfig
+io.flutter.plugins.urllauncher.MethodCallHandlerImpl:
+    private static final java.lang.String TAG
+io.flutter.plugins.urllauncher.R$attr
+io.flutter.plugins.urllauncher.R$color
+io.flutter.plugins.urllauncher.R$dimen
+io.flutter.plugins.urllauncher.R$drawable
+io.flutter.plugins.urllauncher.R$id
+io.flutter.plugins.urllauncher.R$integer
+io.flutter.plugins.urllauncher.R$layout
+io.flutter.plugins.urllauncher.R$string
+io.flutter.plugins.urllauncher.R$style
+io.flutter.plugins.urllauncher.R$styleable
+io.flutter.plugins.urllauncher.R
+io.flutter.plugins.urllauncher.UrlLauncher:
+    private static final java.lang.String TAG
+io.flutter.plugins.urllauncher.UrlLauncherPlugin:
+    private static final java.lang.String TAG
+    public static void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar)
 io.flutter.util.PathUtils:
     public void <init>()
 io.flutter.util.Preconditions:

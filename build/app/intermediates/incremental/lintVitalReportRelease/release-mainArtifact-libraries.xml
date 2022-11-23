@@ -30,6 +30,19 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
+      name="/home/manoj/Janastu/Janastu_radio/android@@:url_launcher_android::release"
+      jars="/home/manoj/Janastu/Janastu_radio/build/url_launcher_android/.transforms/5c3a0cadbe2a98c9b95465b470743cac/transformed/out/jars/classes.jar"
+      resolved="io.flutter.plugins.urllauncher:url_launcher_android:unspecified"
+      folder="/home/manoj/Janastu/Janastu_radio/build/url_launcher_android/.transforms/5c3a0cadbe2a98c9b95465b470743cac/transformed/out"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
       name="/home/manoj/Janastu/Janastu_radio/android@@:path_provider_android::release"
       jars="/home/manoj/Janastu/Janastu_radio/build/path_provider_android/.transforms/c08503d2968cf83cf7d44a01ae6564b5/transformed/out/jars/classes.jar"
       resolved="io.flutter.plugins.pathprovider:path_provider_android:unspecified"

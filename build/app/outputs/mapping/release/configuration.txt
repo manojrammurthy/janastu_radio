@@ -131,6 +131,7 @@
 -keep class android.app.Application { <init>(); }
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
 -keep class com.example.flutter_learning.MainActivity { <init>(); }
+-keep class io.flutter.plugins.urllauncher.WebViewActivity { <init>(); }
 
 # End of content from /home/manoj/Janastu/Janastu_radio/build/app/intermediates/aapt_proguard_file/release/aapt_rules.txt
 # The proguard configuration file for the following section is /home/manoj/.gradle/caches/transforms-3/162e8133b01b6862d21a226f6394015f/transformed/rules/lib/META-INF/com.android.tools/r8/coroutines.pro
