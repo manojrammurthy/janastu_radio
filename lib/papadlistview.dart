@@ -3,9 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
-import 'package:flutter_learning/PapadPage.dart';
-
-//@JsonSerializable()
+import 'PapadPage.dart';
 
 class Audio {
    Audio({required this.id, required this.name, required this.description, required this.audiolink});
@@ -26,7 +24,8 @@ class Audio {
 }
 
 class AudioListView extends StatelessWidget {
-  @override
+
+ @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Audio>>(
       future: _fetchAudios(),
@@ -45,21 +44,27 @@ class AudioListView extends StatelessWidget {
   Future<List<Audio>> _fetchAudios() async {
 
       var dioRequest = dio.Dio();
-    dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
+      //prod
+      
+      dioRequest.options.baseUrl = 'https://stories.janastu.org/api/v1/';
 
     //[2] ADDING TOKEN
     dioRequest.options.headers['content-Type'] = 'application/json';
-    dioRequest.options.headers["Authorization"] = "Token 897f04bf657caad25954f6867fda09680f90421f";
+    dioRequest.options.headers["Authorization"] = "Token bc535c2ebcc7379205d57cc90e6868849cd2a9a8";
+      //local
+    // dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
+
+    // //[2] ADDING TOKEN
+    // dioRequest.options.headers['content-Type'] = 'application/json';
+    // dioRequest.options.headers["Authorization"] = "Token 897f04bf657caad25954f6867fda09680f90421f";
     try{
-    var response = await dioRequest.get("/archive/?group=10");
+    var response = await dioRequest.get("/archive/?group=16");
         final result = json.decode(response.toString());
     if (response.statusCode == 200) {
       String jsonResponse = jsonEncode(result['results']);
       List  jsonout = json.decode(jsonResponse);
-      //print(result['results']);
-      // print(jsonout);
-      // print('success');
-      return jsonout.map((audio) => new Audio.fromJson(audio)).toList();
+
+      return jsonout.map((audio) => new Audio.fromJson(audio)).where((i) =>i.audiolink != '').toList();
     }
     } on DioError  catch (ex) {
       if(ex.type == DioErrorType.connectTimeout){
@@ -76,24 +81,29 @@ class AudioListView extends StatelessWidget {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
-          //if(data[index].audiolink.isEmpty) ;
-          //https://github.com/flutter/flutter/issues/108705
-         // issuses with livview item builder null values 
-          return _tile(data[index].name, data[index].description, data[index].audiolink,Icons.music_note_rounded);
-        });
-  }
-
-  ListTile _tile(String title, String subtitle, String audiolink, IconData icon) => ListTile(
-            title: Text(title,
+          return ListTile(
+          title: Text(data[index].name,
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 20,
             )),
-        subtitle: Text(subtitle),
+        subtitle: Text(data[index].description),
         leading: Icon(
-          icon,
+          Icons.music_note_rounded,
           color: Colors.blue[500],
         ),
-       // onTap: ()=>PapadPage(audiolink),
+        onTap: (){
+          Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Audioplay(data[index].audiolink),
+          ),
         );
-}
+        },
+        );
+          //return _tile(data[index].name, data[index].description, data[index].audiolink,Icons.music_note_rounded);
+        });
+  }
+
+  
+ }

@@ -98,11 +98,11 @@ class _RecordListViewState extends State<RecordListView> {
                             ),
                             IconButton(
                               icon: Icon(Icons.upload_file_rounded),
+                              iconSize: 48,
                               tooltip: 'Upload file to server',
                               onPressed: () => _fileupload(
                                   context, widget.records.elementAt(i), i),
                             ),
-                            Text('Upload'),
                             IconButton(
                               icon: Icon(Icons.delete_outline),
                               onPressed: () => _delete(
@@ -122,19 +122,27 @@ class _RecordListViewState extends State<RecordListView> {
   Future<void> _fileupload(
       BuildContext context, String filePath, int index) async {
     ///[1] CREATING INSTANCE
+    ///prod
     var dioRequest = dio.Dio();
-    dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
+    dioRequest.options.baseUrl = 'https://stories.janastu.org/api/v1';
 
     //[2] ADDING TOKEN
     dioRequest.options.headers["Authorization"] =
-        "Token 897f04bf657caad25954f6867fda09680f90421f";
+        "Token bc535c2ebcc7379205d57cc90e6868849cd2a9a8";
+    //local
+    // var dioRequest = dio.Dio();
+    // dioRequest.options.baseUrl = 'http://127.0.0.1:8000/api/v1';
+
+    // //[2] ADDING TOKEN
+    // dioRequest.options.headers["Authorization"] =
+    //     "Token 897f04bf657caad25954f6867fda09680f90421f";
 
     //[3] ADDING EXTRA INFO
     var formData = new dio.FormData.fromMap({
-      'name': 'manojtest',
+      'name': 'manojtesting',
       'description': 'This is a Audio Archive Demo1',
       'tags': 'janastu,audio,demo,archive',
-      'group': '10'
+      'group': '16'
     });
 
     // //[4] ADD IMAGE TO UPLOAD
@@ -169,7 +177,7 @@ class _RecordListViewState extends State<RecordListView> {
           }
         },
       );
-      print(response);
+      //print(response);
       Navigator.pop(context);
     } on DioError catch (e) {
       Navigator.of(context).pop();
@@ -225,9 +233,11 @@ class _RecordListViewState extends State<RecordListView> {
         _isPlaying = true;
       });
     } else {
+      print('here');
       audioPlayer.pause();
       setState(() {
         _isPlaying = false;
+        _completedPercentage = 0.0;
       });
     }
 
